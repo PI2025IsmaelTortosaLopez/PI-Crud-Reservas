@@ -1,10 +1,13 @@
 package view;
 
+import controller.RecursoController;
+
 import java.util.Scanner;
 
 public class RecursoView {
 
     Scanner sc = new Scanner(System.in);
+    RecursoController controller = new RecursoController();
 
     public void menuRecursos(){
         int op;
@@ -19,22 +22,23 @@ public class RecursoView {
             System.out.println("0.Volver");
 
             op = sc.nextInt();
+            sc.nextLine();
 
             switch (op) {
                 case 1:
-                    System.out.println("Creamos un nuevo recurso");
+                    crearRecurso();
                     break;
                 case 2:
-                    System.out.println("Eliminamos un recurso");
+                    eliminarRecurso();
                     break;
                 case 3:
-                    System.out.println("Modificamos un recurso");
+                    modificarRecurso();
                     break;
                 case 4:
-                    System.out.println("Listado de recrusos");
+                    controller.listarRecursos();
                     break;
                 case 5:
-                    System.out.println("Buscando por nombre");
+                    buscarRecurso();
                     break;
                 case 0:
                     System.out.println("Volviendo al menú principal");
@@ -43,4 +47,56 @@ public class RecursoView {
 
         } while (op != 0);
     }
+
+    private void crearRecurso() {
+        System.out.print("Nombre: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("Descripción: ");
+        String descripcion = sc.nextLine();
+
+        System.out.print("Ubicación: ");
+        String ubicacion = sc.nextLine();
+
+        System.out.print("Capacidad: ");
+        int capacidad = sc.nextInt();
+        sc.nextLine();
+
+        controller.crearRecurso(nombre, descripcion, ubicacion, capacidad);
+    }
+
+    private void eliminarRecurso() {
+        System.out.print("ID recurso: ");
+        int id = sc.nextInt();
+        controller.eliminarRecurso(id);
+    }
+
+    private void modificarRecurso() {
+        System.out.print("ID recurso: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Nuevo nombre: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("Nueva descripción: ");
+        String descripcion = sc.nextLine();
+
+        System.out.print("Nueva ubicación: ");
+        String ubicacion = sc.nextLine();
+
+        System.out.print("Nueva capacidad: ");
+        int capacidad = sc.nextInt();
+        sc.nextLine();
+
+        controller.modificarRecurso(id, nombre, descripcion, ubicacion, capacidad);
+    }
+
+    private void buscarRecurso() {
+        System.out.print("Nombre del recurso: ");
+        String nombre = sc.nextLine();
+
+        controller.buscarPorNombre(nombre);
+    }
+
 }
