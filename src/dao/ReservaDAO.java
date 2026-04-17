@@ -4,8 +4,11 @@ import jdk.jshell.spi.ExecutionControlProvider;
 import model.Reserva;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReservaDAO {
 
@@ -224,6 +227,62 @@ public class ReservaDAO {
         }
 
         return -1;
+    }
+
+    public List<Reserva> encontrarPorFecha(LocalDate fecha) {
+
+        List<Reserva> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM reserva WHERE fecha = ?";
+
+        try (Connection con = DBConnection.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setDate(1, java.sql.Date.valueOf(fecha));
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reserva r = new Reserva();
+
+                r.setIdRecurso(rs.getInt("id_recurso"));
+                r.setFecha(rs.getDate("fecha"));
+                r.setHoraInicio(rs.getTime("hora_inicio"));
+                r.setHoraFin(rs.getTime("hora_fin"));
+
+                lista.add(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public Map<String, Integer> recursosMasUsados() {
+
+        Map<String, Integer> mapa = new LinkedHashMap<>();
+
+        String sql = """
+        SELECT r.nombre, COUNT(*) as total
+        FROM reserva res
+        JOIN recurso r ON res.id_recurso = r.id_recurso
+        GROUP BY r.nombre
+        ORDER BY total DESC
+        """;
+
+        try (Connection con = DBConnection.conectar();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                mapa.put(rs.getString("nombre"), rs.getInt("total"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mapa;
     }
 
 }

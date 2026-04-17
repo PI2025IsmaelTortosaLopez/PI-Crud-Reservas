@@ -5,7 +5,9 @@ import model.Reserva;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class ReservaController {
 
@@ -35,7 +37,7 @@ public class ReservaController {
         }
 
         if (dao.solapamientoReservas(idRecurso, f, hi, hf)){
-            System.out.println("❌ Ya existe una reserva en ese horario");
+            System.out.println("Ya existe una reserva en ese horario");
             return;
         }
 
@@ -97,6 +99,14 @@ public class ReservaController {
         for (Reserva r : lista){
             System.out.println(r.getIdReservaLocal() + "-" + r.getIdUsuario());
         }
+    }
+
+    public List<Reserva> reservasPorFecha(LocalDate fecha) {
+        return dao.encontrarPorFecha(fecha);
+    }
+
+    public Map<String, Integer> recursosMasUsados() {
+        return dao.recursosMasUsados();
     }
 
 }
