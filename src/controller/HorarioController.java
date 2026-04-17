@@ -50,7 +50,7 @@ public class HorarioController {
         List<Horario> lista = dao.listarHorarios();
 
         for (Horario h : lista){
-            System.out.println(h.getDiaSemana() + "-" + h.getHoraInicio() + "-" + h.getHoraFin());
+            System.out.println("Día: " + h.getDiaSemana() + " - " + "Hora inicio: " + h.getHoraInicio() + " - " + "Hora fin: " + h.getHoraFin());
         }
     }
 

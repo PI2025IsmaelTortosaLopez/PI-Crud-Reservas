@@ -43,7 +43,7 @@ public class UsuarioController {
         List<Usuario> lista = dao.obtenerTodos();
 
         for (Usuario u : lista){
-            System.out.println(u.getIdUsuario() + "-" + u.getNombre() + "-" + u.getCorreo());
+            System.out.println("Id usuario: " + u.getIdUsuario() + " - " + "Nombre: " + u.getNombre() + " - " + "Correo: " + u.getCorreo());
         }
     }
 
@@ -85,7 +85,7 @@ public class UsuarioController {
             System.out.println("No se encontraron usuarios con ese nombre");
         } else {
             for (Usuario u : lista){
-                System.out.println(u.getIdUsuario() + "-" + u.getNombre() + "-" + u.getCorreo());
+                System.out.println("Id Usuario: " + u.getIdUsuario() + " - " + "Nombre: " + u.getNombre() + " - " + "Correo: " + u.getCorreo());
             }
         }
     }
@@ -99,7 +99,7 @@ public class UsuarioController {
         Usuario u = dao.buscarPorCorreo(correo);
 
         if (u != null){
-            System.out.println(u.getIdUsuario() + "-" + u.getNombre() + "-" + u.getCorreo());
+            System.out.println("Id Usuario: " + u.getIdUsuario() + " - " + "Nombre: " + u.getNombre() + " - " + "Correo: " + u.getCorreo());
         } else {
             System.out.println("Usuario no encontrado con ese correo");
         }

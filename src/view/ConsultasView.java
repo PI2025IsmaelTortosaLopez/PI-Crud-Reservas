@@ -50,9 +50,10 @@ public class ConsultasView {
 
         List<Reserva> lista = controller.reservasPorFecha(hoy);
 
-        System.out.println("\n--- RESERVAS DE HOY ---");
+        System.out.println("==== RESERVAS DE HOY ====");
 
-        lista.forEach(r -> System.out.println(r.getIdRecurso() + " | " + r.getFecha() + " | " + r.getHoraInicio() + "-" + r.getHoraFin()));
+        lista.forEach(r -> System.out.println("Id recurso: " + r.getIdRecurso() + " - " + "Fecha: " + r.getFecha() + " - "
+                + "Hora inicio: " + r.getHoraInicio() + " - " + "Hora fin: " + r.getHoraFin()));
     }
 
     private void reservasPorFecha() {
@@ -62,10 +63,11 @@ public class ConsultasView {
 
         List<Reserva> lista = controller.reservasPorFecha(fecha);
 
-        System.out.println("\n--- RESERVAS DEL DÍA ---");
+        System.out.println("==== RESERVAS DEL DÍA ====");
 
         for (Reserva r : lista) {
-            System.out.println(r.getIdRecurso() + " | " + r.getFecha() + " | " + r.getHoraInicio() + " - " + r.getHoraFin());
+            System.out.println("Id recurso: " + r.getIdRecurso() + " - " + "Fecha: " + r.getFecha() + " - "
+                    + "Hora inicio: " + r.getHoraInicio() + " - " + "Hora fin: " + r.getHoraFin());
         }
     }
 
@@ -73,7 +75,7 @@ public class ConsultasView {
 
         Map<String, Integer> datos = controller.recursosMasUsados();
 
-        System.out.println("\n--- RECURSOS MÁS USADOS ---");
+        System.out.println("==== RECURSOS MÁS USADOS ====");
 
         datos.forEach((recurso, veces) -> {
             System.out.println(recurso + " → " + veces + " reservas");

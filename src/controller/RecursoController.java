@@ -39,7 +39,9 @@ public class RecursoController {
         List<Recurso> lista = dao.obtenerTodos();
 
         for (Recurso r : lista){
-            System.out.println(r.getIdRecurso() + "-" + r.getNombre() + "-" + r.getDescripcion() + "-" + r.getUbicacion() + "-" + r.getCapacidad());
+            System.out.println("Id recurso: " + r.getIdRecurso() + " - " + "Nombre: " + r.getNombre()
+                    + " - " + "Descripción: " + r.getDescripcion() + " - " + "Ubicación: " + r.getUbicacion()
+                    + " - " + "Capacdad: " + r.getCapacidad());
         }
     }
 
@@ -79,7 +81,9 @@ public class RecursoController {
             System.out.println("No se encontraron recursos con ese nombre");
         } else {
             for (Recurso r : lista){
-                System.out.println(r.getIdRecurso() + "-" + r.getNombre() + "-" + r.getDescripcion() + "-" + r.getUbicacion() + "-" + r.getCapacidad());
+                System.out.println("Id recurso: " + r.getIdRecurso() + " - " + "Nombre: " + r.getNombre()
+                        + " - " + "Descripción: " + r.getDescripcion() + " - " + "Ubicación: " + r.getUbicacion()
+                        + " - " + "Capacidad: " + r.getCapacidad());
             }
         }
     }

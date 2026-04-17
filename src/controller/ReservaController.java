@@ -94,7 +94,9 @@ public class ReservaController {
         List<Reserva> lista = dao.listarTodas();
 
         for (Reserva r : lista) {
-            System.out.println(r.getIdRecurso() + "-" + r.getIdReservaLocal() + "-" + r.getIdUsuario() + "-" + r.getFecha() + "-" + r.getHoraInicio() + "-" + r.getHoraFin());
+            System.out.println("Id recurso: " + r.getIdRecurso() + " - " + "Id reserva local: " + r.getIdReservaLocal()
+                    + " - " + "Id usuario: " + r.getIdUsuario() + " - " + "Fecha de la reserva: " + r.getFecha() + " - " + "Hora inicio reserva: "
+                    + r.getHoraInicio() + " - " + "Hora fin reserva: " + r.getHoraFin());
         }
     }
 
@@ -139,7 +141,7 @@ public class ReservaController {
         List<Reserva> lista = dao.buscarPorUsuario(idUsuario);
 
         for (Reserva r : lista){
-            System.out.println(r.getIdRecurso() + "-" + r.getFecha());
+            System.out.println("Id recurso: " + r.getIdRecurso() + " - " + "Fecha reserva: " + r.getFecha());
         }
     }
 
@@ -152,7 +154,7 @@ public class ReservaController {
         List<Reserva> lista = dao.buscarPorRecurso(idRecurso);
 
         for (Reserva r : lista){
-            System.out.println(r.getIdReservaLocal() + "-" + r.getIdUsuario());
+            System.out.println("Id reserva local: " + r.getIdReservaLocal() + " - " + "Id Usuario: " + r.getIdUsuario());
         }
     }
 
