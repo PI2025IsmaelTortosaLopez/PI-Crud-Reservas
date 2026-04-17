@@ -3,9 +3,7 @@ package dao;
 import jdk.jshell.spi.ExecutionControlProvider;
 import model.Reserva;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,6 +178,52 @@ public class ReservaDAO {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    public boolean solapamientoReservas(int idRecurso, Date fecha, Time inicio, Time fin){
+        String sql = """
+                SELECT * FROM reserva
+                WHERE id_recurso=? AND fecha=?
+                AND (? < hora_fin AND ? > hora_inicio)
+                """;
+
+        try (Connection con = DBConnection.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)){
+
+            ps.setInt(1, idRecurso);
+            ps.setDate(2, fecha);
+            ps.setTime(3, inicio);
+            ps.setTime(4, fin);
+
+            ResultSet rs = ps.executeQuery();
+
+            return  rs.next();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int obtenerCapacidad(int idRecurso){
+
+        String sql = "SELECT capacidad FROM recurso WHERE id_recurso=?";
+
+        try (Connection con = DBConnection.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)){
+
+            ps.setInt(1, idRecurso);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                return rs.getInt("capacidad");
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
 }

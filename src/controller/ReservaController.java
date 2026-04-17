@@ -17,6 +17,28 @@ public class ReservaController {
         Time hi = Time.valueOf(horaInicio);
         Time hf = Time.valueOf(horaFin);
 
+        Date hoy = new Date(System.currentTimeMillis());
+        if (f.before(hoy)){
+            System.out.println("La fecha introducida no es válida");
+            return;
+        }
+
+        if (hf.before(hi)){
+            System.out.println("La hora fin debe ser mayor que hora inicio");
+            return;
+        }
+
+        int capacidad = dao.obtenerCapacidad(idRecurso);
+        if (plazas > capacidad){
+            System.out.println("Supera la capacidad máxima del recurso");
+            return;
+        }
+
+        if (dao.solapamientoReservas(idRecurso, f, hi, hf)){
+            System.out.println("❌ Ya existe una reserva en ese horario");
+            return;
+        }
+
         Reserva r = new Reserva();
         r.setIdRecurso(idRecurso);
         r.setIdUsuario(idUsuario);
