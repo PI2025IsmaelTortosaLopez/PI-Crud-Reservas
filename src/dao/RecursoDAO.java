@@ -8,8 +8,17 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase DAO encargada de gestionar las operaciones de base de datos relacionadas con la entidad recurso.
+ * Permite realizar operaciones de CRUD sobre la tabla recurso.
+ */
 public class RecursoDAO {
 
+    /**
+     * Inserta un nuevo recurso en la base de datos.
+     *
+     * @param r objeto recurso con los datos a insertar.
+     */
     public void insertar(Recurso r){
         String sql = "INSERT INTO recurso (nombre, descripcion, ubicacion, capacidad) VALUES (?, ?, ?, ?)";
 
@@ -29,6 +38,11 @@ public class RecursoDAO {
         }
     }
 
+    /**
+     * Obtiene todos los recursos registrados en la base de datos.
+     *
+     * @return lista de recursos.
+     */
     public List<Recurso> obtenerTodos(){
         List<Recurso> lista = new ArrayList<>();
         String sql = "SELECT * FROM recurso";
@@ -52,6 +66,11 @@ public class RecursoDAO {
         return lista;
     }
 
+    /**
+     * Elimina un recurso de la base de datos por su identificador.
+     *
+     * @param id identificador del recurso a eliminar.
+     */
     public void eliminar(int id){
         String sql = "DELETE FROM recurso WHERE id_recurso = ?";
 
@@ -67,6 +86,11 @@ public class RecursoDAO {
         }
     }
 
+    /**
+     * Actualiza los datos de un recurso existente en la base de datos por los nuevos datos introducidos.
+     *
+     * @param r objeto recurso con los datos actualizados.
+     */
     public void modificar(Recurso r){
         String sql = "UPDATE recurso SET nombre=?, descripcion=?, ubicacion=?, capacidad=? WHERE id_recurso=?";
 
@@ -87,6 +111,12 @@ public class RecursoDAO {
         }
     }
 
+    /**
+     * Busca recursos por nombre utilizando coincidencias parciales.
+     *
+     * @param nombre nombre o parte del nombre a buscar.
+     * @return lista de recursos que coinciden con los datos introducidos en la búsqueda.
+     */
     public List<Recurso> buscarPorNombre(String nombre){
         List<Recurso> lista = new ArrayList<>();
         String sql = "SELECT * FROM recurso WHERE nombre LIKE ?";

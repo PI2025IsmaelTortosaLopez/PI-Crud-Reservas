@@ -6,8 +6,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Claso DAO encargada de gestionar las operaciones de base de datos relacionadas con la entidad usuario.
+ * Permite realizar operaciones CRUD (insertar, modificar, eliminar, consultas) sobre la tabla usuario.
+ */
 public class UsuarioDAO {
 
+    /**
+     * Inserta un nuevo usuario en la base de datos.
+     *
+     * @param u objeto usuario con los datos a insertar en la base de datos.
+     */
     public void insertar(Usuario u){
         String sql= "INSERT INTO usuario (correo_electronico, contrasena, nombre, fecha_nacimiento, tipo_usuario) VALUES (?, ?, ?, ?, ?)";
 
@@ -28,6 +37,11 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * Obtiene todos los usuarios registrados en la base de datos.
+     *
+     * @return lista de usuarios.
+     */
     public List<Usuario> obtenerTodos(){
         List<Usuario> lista = new ArrayList<>();
         String sql = "SELECT * FROM usuario";
@@ -50,6 +64,12 @@ public class UsuarioDAO {
        return  lista;
     }
 
+
+    /**
+     * Elimina un usuario de la base de datos mediante su identificador (id).
+     *
+     * @param id identificador del usuario a eliminar.
+     */
     public void eliminar(int id){
         String sql = "DELETE FROM usuario WHERE id_usuario = ?";
 
@@ -65,6 +85,11 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * Actualiza los datos de un usuario existente en la base de datos por los nuevos datos introducidos.
+     *
+     * @param u objeto usuario con los datos actualizados.
+     */
     public void modificar(Usuario u){
         String sql = "UPDATE usuario SET correo_electronico=?, contrasena=?, nombre=?, fecha_nacimiento=?, tipo_usuario=? WHERE id_usuario=?";
 
@@ -86,6 +111,13 @@ public class UsuarioDAO {
         }
     }
 
+
+    /**
+     * Busca usuarios por nombre utilizando coincidencias parciales.
+     *
+     * @param nombre nombre o parte del nombre a buscar.
+     * @return lista de usuarios que coinciden con los datos introducidos en la búsqueda.
+     */
     public List<Usuario> buscarPorNombre(String nombre){
         List<Usuario> lista = new ArrayList<>();
         String sql = "SELECT * FROM usuario WHERE nombre LIKE ?";
@@ -111,6 +143,14 @@ public class UsuarioDAO {
         return lista;
     }
 
+
+    /**
+     * Busca un usuario en la base de datos a partir de su correo electrónico.
+     *
+     * @param correo correo del usuario.
+     * @return objeto usuario si el correo introducido coincide con alguno de los registrados en la base de datos,
+     * o null si el correo introducido no coincide con ninguno de los registrados.
+     */
     public Usuario buscarPorCorreo(String correo){
         String sql = "SELECT * FROM usuario WHERE correo_electronico = ?";
         Usuario u = null;
@@ -135,6 +175,12 @@ public class UsuarioDAO {
         return  u;
     }
 
+    /**
+     * Inserta un usuario en la base de datos y devuelve el id generado al crearlo.
+     *
+     * @param u objeto usuario a insertar.
+     * @return id generado por la base de datos o -1 si no se pudo obtener.
+     */
     public int recuperarId(Usuario u){
         String sql = "INSERT INTO usuario (correo_electronico, contrasena, nombre, fecha_nacimiento, tipo_usuario)  VALUES (?, ?, ?, ?, ?)";
 

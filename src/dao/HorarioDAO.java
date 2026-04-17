@@ -9,8 +9,17 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase DAO encargada de gestionar las operaciones de bases de datos relacionadas con la entidad horario.
+ * Permite realizar operaciones de CRUD sobre la tabla horario.
+ */
 public class HorarioDAO {
 
+    /**
+     * Inserta un nuevo horario en la base de datos.
+     *
+     * @param h objeto horario con los datos a insertar.
+     */
     public void insertar(Horario h){
         String sql = "INSERT INTO horario (dia_semana, hora_inicio, hora_fin) VALUES (?, ?, ?)";
 
@@ -30,6 +39,11 @@ public class HorarioDAO {
 
     }
 
+    /**
+     * Obtiene todos los horarios registrados en la base de datos.
+     *
+     * @return lista de horarios.
+     */
     public List<Horario> listarHorarios(){
         List<Horario> lista = new ArrayList<>();
         String sql = "SELECT * FROM horario";
@@ -54,6 +68,11 @@ public class HorarioDAO {
         return lista;
     }
 
+    /**
+     * Actualiza los datos de un horario existente en la base de datos.
+     *
+     * @param h objeto horario con los datos actualizados a los nuevos datos introducidos.
+     */
     public void modificar(Horario h){
         String sql = "UPDATE horario SET dia_semana=?, hora_inicio=?, hora_fin=? WHERE id_horario=?";
 
@@ -73,6 +92,11 @@ public class HorarioDAO {
         }
     }
 
+    /**
+     * Elimina un horario de la base de datos por su identificador.
+     *
+     * @param idHorario identificador del horario a eliminar.
+     */
     public void eliminar(int idHorario){
         String sql = "DELETE FROM horario WHERE id_horario=?";
 

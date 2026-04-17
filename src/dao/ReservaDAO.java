@@ -10,8 +10,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Clase DAO encargada de gestionar las operaciones de base de datos relacionadas con la entidad reserva.
+ * Incluye operaciones de CRUD, consultas y validaciones relacionadas con las reservas de los recursos.
+ */
 public class ReservaDAO {
 
+    /**
+     * Inserta una nueva reserva en la base de datos.
+     * Calcula automáticamente el id_reserva_local dentro del recurso.
+     *
+     * @param r objeto reserva con los datos a insertar.
+     */
     public void insertar(Reserva r){
         String sqlMax = "SELECT MAX(id_reserva_local) FROM reserva WHERE id_recurso =?";
         String sqlInsert = "INSERT INTO reserva VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -54,6 +64,12 @@ public class ReservaDAO {
 
     }
 
+    /**
+     * Elimina una reserva de la base de datos.
+     *
+     * @param idRecurso identificador del recurso.
+     * @param idReservaLocal identificador de la reserva dentro del recurso.
+     */
     public void eliminar(int idRecurso, int idReservaLocal){
         String sql = "DELETE FROM reserva WHERE id_recurso=? AND id_reserva_local=?";
 
@@ -71,6 +87,11 @@ public class ReservaDAO {
         }
     }
 
+    /**
+     * Modifica una reserva existente en la base de datos.
+     *
+     * @param r objeto reserva con los datos actualizados a los nuevos introducidos.
+     */
     public void modificar(Reserva r){
         String sql = "UPDATE reserva SET id_usuario=?, fecha=?, hora_inicio=?, hora_fin=?, coste=?, numero_plazas=?, motivo=?, observaciones=? WHERE id_recurso=? AND id_reserva_local=?";
 
@@ -96,6 +117,11 @@ public class ReservaDAO {
         }
     }
 
+    /**
+     * Obtiene todas las reservas registradas en la base de datos.
+     *
+     * @return lista de reservas.
+     */
     public List<Reserva> listarTodas(){
         List<Reserva> lista = new ArrayList<>();
         String sql = "SELECT * FROM reserva";
@@ -127,6 +153,12 @@ public class ReservaDAO {
         return lista;
     }
 
+    /**
+     * Busca reservas asociadas a un usuario.
+     *
+     * @param idUsuario identificador del usuario.
+     * @return lista de reservas del usuario.
+     */
     public List<Reserva> buscarPorUsuario(int idUsuario){
         List<Reserva> lista = new ArrayList<>();
         String sql = "SELECT * FROM reserva WHERE id_usuario=?";
@@ -155,6 +187,12 @@ public class ReservaDAO {
         return lista;
     }
 
+    /**
+     * Busca reservas asociadas a un recurso.
+     *
+     * @param idRecurso identificador del recurso.
+     * @return lista de reservas del recurso.
+     */
     public List<Reserva> buscarPorRecurso(int idRecurso){
         List<Reserva> lista = new ArrayList<>();
         String sql = "SELECT * FROM reserva WHERE id_recurso=?";
@@ -183,6 +221,15 @@ public class ReservaDAO {
         return lista;
     }
 
+    /**
+     * Comprueba si existe solapamiento de reservas en un recurso.
+     *
+     * @param idRecurso identificador del recurso.
+     * @param fecha fecha de la reserva.
+     * @param inicio inicio de la reserva.
+     * @param fin fin de la reserva.
+     * @return true si existe solapamiento, false en caso contrario.
+     */
     public boolean solapamientoReservas(int idRecurso, Date fecha, Time inicio, Time fin){
         String sql = """
                 SELECT * FROM reserva
@@ -208,6 +255,12 @@ public class ReservaDAO {
         return false;
     }
 
+    /**
+     * Obtiene la capacidad máxima de un recurso.
+     *
+     * @param idRecurso identificador del recurso.
+     * @return capacidad del recurso, o -1 si no existe.
+     */
     public int obtenerCapacidad(int idRecurso){
 
         String sql = "SELECT capacidad FROM recurso WHERE id_recurso=?";
@@ -229,6 +282,12 @@ public class ReservaDAO {
         return -1;
     }
 
+    /**+
+     * Busca reservas por fecha concreta.
+     *
+     * @param fecha fecha a consultar.
+     * @return lista de reservas en ese fecha.
+     */
     public List<Reserva> encontrarPorFecha(LocalDate fecha) {
 
         List<Reserva> lista = new ArrayList<>();
@@ -259,6 +318,11 @@ public class ReservaDAO {
         return lista;
     }
 
+    /**
+     * Obtiene un ranking de los recursos más utilizados.
+     *
+     * @return mapa con el nombre del recurso y el número de usos.
+     */
     public Map<String, Integer> recursosMasUsados() {
 
         Map<String, Integer> mapa = new LinkedHashMap<>();
